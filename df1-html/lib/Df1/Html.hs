@@ -91,7 +91,7 @@ keyHtml :: D.Key -> [X.Node]
 keyHtml k = spanClass "key" (X.text (textLazyFromBuilder (DR.renderKey k)))
 
 valueHtml :: D.Value -> [X.Node]
-valueHtml v = spanClass "value" (X.text (D.unValue v))
+valueHtml v = spanClass "value" (X.text (textLazyFromBuilder (DR.renderValue v)))
 
 spanClass :: T.Text -> [X.Node] -> [X.Node]
 spanClass t = X.element "span" [("class", t)]
