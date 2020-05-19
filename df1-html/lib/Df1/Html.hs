@@ -9,9 +9,11 @@ import Data.Foldable (toList)
 import Data.List (intercalate)
 import qualified Data.Sequence as Seq
 import qualified Data.Text as T
+import qualified Data.Text.Encoding as TE
 import qualified Data.Text.Lazy as TL
 import qualified Data.Time.Clock.System as Time
 import qualified Df1 as D
+import qualified Df1.Render as DR
 import qualified Xmlbf as X
 
 log1 :: D.Log
@@ -26,7 +28,7 @@ log1 =
 examplePath :: Seq.Seq D.Path
 examplePath =
   [ D.Push (D.segment ("foo" :: String)),
-    D.Attr (D.key ("x" :: String)) (D.value ("a" :: String)),
+    D.Attr (D.key ("=" :: String)) (D.value ("a" :: String)),
     D.Attr (D.key ("y" :: String)) (D.value ("b" :: String)),
     D.Push (D.segment ("bar" :: String)),
     D.Push (D.segment ("qux" :: String)),
@@ -51,7 +53,10 @@ toHtml log =
       ]
 
 timeHtml :: Time.SystemTime -> [X.Node]
-timeHtml t = spanClass "time" (X.text "2019-11-15T18:05:54.949470902Z")
+timeHtml t = spanClass "time" (X.text (textLazyFromBuilder (DR.renderIso8601 t)))
+
+textLazyFromBuilder :: BB.Builder -> TL.Text
+textLazyFromBuilder b = TL.fromStrict (TE.decodeUtf8 (BL.toStrict (BB.toLazyByteString b)))
 
 levelHtml :: D.Level -> [X.Node]
 levelHtml l = spanClass "level" (X.text (levelToText l))

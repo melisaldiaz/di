@@ -6,6 +6,7 @@
 module Df1.Render
  ( render
  , renderColor
+ , renderIso8601
  ) where
 
 import qualified Data.ByteString.Builder as BB
