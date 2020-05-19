@@ -74,7 +74,7 @@ levelToText l =
     D.Emergency -> "EMERGENCY"
 
 messageHtml :: D.Message -> [X.Node]
-messageHtml m = spanClass "msg" (X.text (D.unMessage m))
+messageHtml m = spanClass "msg" (X.text (textLazyFromBuilder (DR.renderMessage m)))
 
 pathsHtml :: Seq.Seq D.Path -> [X.Node]
 pathsHtml ps = spanClass "path" (intercalate (X.text " ") (fmap pathHtml (toList ps)))
@@ -85,10 +85,10 @@ pathHtml p = case p of
   D.Attr key val -> spanClass "attr" (keyHtml key <> X.text "=" <> valueHtml val)
 
 segmentHtml :: D.Segment -> [X.Node]
-segmentHtml s = spanClass "seg" (X.text (D.unSegment s))
+segmentHtml s = spanClass "seg" (X.text (textLazyFromBuilder (DR.renderSegment s)))
 
 keyHtml :: D.Key -> [X.Node]
-keyHtml k = spanClass "key" (X.text (D.unKey k))
+keyHtml k = spanClass "key" (X.text (textLazyFromBuilder (DR.renderKey k)))
 
 valueHtml :: D.Value -> [X.Node]
 valueHtml v = spanClass "value" (X.text (D.unValue v))
