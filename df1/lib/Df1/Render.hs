@@ -95,9 +95,11 @@ renderPath = fix $ \f -> \case
 
 -- | Escaping rules for 'Segment':
 --
--- * A \'%' anywhere is always percent-escaped (\"%25")"
+-- * A \'%\' anywhere is always percent-escaped (\"%25\")
 --
--- * A 'isControl7' char anywhere is always percent-escaped.
+-- * An ASCII-7 control character anywhere is always percent-escaped. 
+--
+-- The output is encoded as UTF-8.
 renderMessage :: Message -> BB.Builder
 {-# INLINE renderMessage #-}
 renderMessage x = eall (unMessage x)
@@ -110,12 +112,14 @@ renderMessage x = eall (unMessage x)
 
 -- | Escaping rules for 'Segment':
 --
--- * A 'isPunctuation7' in the first character is always percent-escaped.
+-- * An ASCII-7 punctuation character as first character is always percent-escaped.
 --
--- * A 'isPunctuation7' anywhere else is always percent-escaped, unless it is
---   \'-' or \'_'.
+-- * An ASCII-7 punctuation character anywhere else is always percent-escaped, unless it is
+--   \'-\' or \'_\'.
 --
--- * A 'isControl7' char anywhere is always percent-escaped.
+-- * An ASCII-7 control character anywhere is always percent-escaped. 
+--
+-- The output is encoded as UTF-8.
 renderSegment :: Segment -> BB.Builder
 {-# INLINE renderSegment #-}
 renderSegment x = case TL.uncons (unSegment x) of
@@ -138,12 +142,14 @@ renderSegment x = case TL.uncons (unSegment x) of
 
 -- | Escaping rules for 'Key':
 --
--- * A 'isControl7' char anywhere is always percent-escaped.
+-- * An ASCII-7 control character is always percent-escaped.
 --
--- * A 'isPunctuation7' in the first character is always percent-escaped.
+-- * An ASCII-7 punctuation character is always percent-escaped.
 --
--- * A 'isPunctuation7' anywhere else is always percent-escaped, unless it is
---   \'-' or \'_'.
+-- * An ASCII-7 punctuation character anywhere else is always percent-escaped, unless it is
+--   \'-\' or \'_\'.
+--
+-- The output is encoded as UTF-8.
 renderKey :: Key -> BB.Builder
 {-# INLINE renderKey #-}
 renderKey x = case TL.uncons (unKey x) of
@@ -166,13 +172,15 @@ renderKey x = case TL.uncons (unKey x) of
 
 -- | Escaping rules for 'Value':
 --
--- * A \' ' anywhere is always percent-escaped (\"%20").
+-- * A \' \' anywhere is always percent-escaped (\"%20\").
 --
--- * A \'%' anywhere is always percent-escaped (\"%25")"
+-- * A \'%\' anywhere is always percent-escaped (\"%25\")"
 --
--- * A \'=' anywhere is always percent-escaped (\"%3d").
+-- * A \'=\' anywhere is always percent-escaped (\"%3d\").
 --
--- * A 'isControl7' char anywhere is always percent-escaped.
+-- * An ASCII-7 control character anywhere is always percent-escaped.
+--
+-- The output is encoded as UTF-8.
 renderValue :: Value -> BB.Builder
 {-# INLINE renderValue #-}
 renderValue x = eall (unValue x)
@@ -314,7 +322,7 @@ word8HexPercent = BBP.liftFixedToBounded
 
 -- | Renders /YYYY-MM-DDThh:mm:ss.sssssssssZ/ (nanosecond precision).
 --
--- The rendered string is a 30 characters long, and it's ASCII-encoded.
+-- The rendered string is 30 characters long, and it's encoded as ASCII/UTF-8.
 renderIso8601 :: Time.SystemTime -> BB.Builder
 {-# INLINE renderIso8601 #-}
 renderIso8601 = \syst ->
