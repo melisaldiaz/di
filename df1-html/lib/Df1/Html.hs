@@ -44,7 +44,7 @@ test =
 xxx :: IO ()
 xxx = do
   let logs = map (\l -> log1 {D.log_level = l}) [minBound .. maxBound]
-  mapM_ (BL.putStrLn . BB.toLazyByteString . D.renderColor) logs
+  mapM_ (BL.putStrLn . BB.toLazyByteString . DR.logColor) logs
 
 toHtml :: D.Log -> [X.Node]
 toHtml log =
@@ -63,7 +63,7 @@ levelClass :: D.Level -> T.Text
 levelClass l = "df1-" <> TL.toStrict (TL.toLower (levelToText l))
 
 timeHtml :: Time.SystemTime -> [X.Node]
-timeHtml t = spanClass "time" (X.text (textLazyFromBuilder (DR.renderIso8601 t)))
+timeHtml t = spanClass "time" (X.text (textLazyFromBuilder (DR.iso8601 t)))
 
 textLazyFromBuilder :: BB.Builder -> TL.Text
 textLazyFromBuilder b = TL.fromStrict (TE.decodeUtf8 (BL.toStrict (BB.toLazyByteString b)))
@@ -84,7 +84,7 @@ levelToText l =
     D.Emergency -> "EMERGENCY"
 
 messageHtml :: D.Message -> [X.Node]
-messageHtml m = spanClass "msg" (X.text (textLazyFromBuilder (DR.renderMessage m)))
+messageHtml m = spanClass "msg" (X.text (textLazyFromBuilder (DR.message m)))
 
 pathsHtml :: Seq.Seq D.Path -> [X.Node]
 pathsHtml ps = spanClass "path" (intercalate (X.text " ") (fmap pathHtml (toList ps)))
@@ -95,13 +95,13 @@ pathHtml p = case p of
   D.Attr key val -> spanClass "attr" (keyHtml key <> X.text "=" <> valueHtml val)
 
 segmentHtml :: D.Segment -> [X.Node]
-segmentHtml s = spanClass "seg" (X.text (textLazyFromBuilder (DR.renderSegment s)))
+segmentHtml s = spanClass "seg" (X.text (textLazyFromBuilder (DR.segment s)))
 
 keyHtml :: D.Key -> [X.Node]
-keyHtml k = spanClass "key" (X.text (textLazyFromBuilder (DR.renderKey k)))
+keyHtml k = spanClass "key" (X.text (textLazyFromBuilder (DR.key k)))
 
 valueHtml :: D.Value -> [X.Node]
-valueHtml v = spanClass "value" (X.text (textLazyFromBuilder (DR.renderValue v)))
+valueHtml v = spanClass "value" (X.text (textLazyFromBuilder (DR.value v)))
 
 spanClass :: T.Text -> [X.Node] -> [X.Node]
 spanClass t = X.element "span" [("class", t)]
