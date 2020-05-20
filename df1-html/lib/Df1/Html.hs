@@ -37,11 +37,18 @@ examplePath =
   ]
 
 test :: IO ()
-test = BL.putStrLn $ BB.toLazyByteString (X.encode (toHtml log1))
+test =
+  let logs = map (\l -> log1 {D.log_level = l}) [minBound .. maxBound]
+   in mapM_ (BL.putStrLn . BB.toLazyByteString . X.encode . toHtml) logs
+
+xxx :: IO ()
+xxx = do
+  let logs = map (\l -> log1 {D.log_level = l}) [minBound .. maxBound]
+  mapM_ (BL.putStrLn . BB.toLazyByteString . D.renderColor) logs
 
 toHtml :: D.Log -> [X.Node]
 toHtml log =
-  X.element "div" [("class", "df1-log")] $
+  X.element "div" [("class", "df1-log " <> levelClass (D.log_level log))] $
     mconcat
       [ timeHtml (D.log_time log),
         X.text " ",
@@ -51,6 +58,9 @@ toHtml log =
         X.text " ",
         messageHtml (D.log_message log)
       ]
+
+levelClass :: D.Level -> T.Text
+levelClass l = "df1-" <> TL.toStrict (TL.toLower (levelToText l))
 
 timeHtml :: Time.SystemTime -> [X.Node]
 timeHtml t = spanClass "time" (X.text (textLazyFromBuilder (DR.renderIso8601 t)))
