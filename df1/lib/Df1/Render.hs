@@ -38,7 +38,7 @@ import Df1.Types
 
 --------------------------------------------------------------------------------
 
--- This is rather ugly, but whatever.
+-- | Like 'log', but with ASCII colors.
 logColor :: Log -> BB.Builder
 {-# INLINABLE logColor #-}
 logColor = \log_ ->
@@ -62,7 +62,18 @@ logColor = \log_ ->
      Emergency ->
        bgRed <> fgBlack <> t <> pRed <> fgWhite <> emergency <> fgBlack <> m
 
--- | Like 'logColor', but without color.
+-- | Renders a 'Log' on its own line. Doesn't include a trailing newline character.
+--
+-- For example:
+--
+-- @
+-- 2019-11-15T18:05:54.949470902Z NOTICE Welcome to my program!
+-- 2019-11-15T18:05:54.949623731Z \/initialization NOTICE Starting web server
+-- 2019-11-15T18:05:54.949630205Z \/initialization ALERT Disk is almost full!!!
+-- 2019-11-15T18:05:54.949640299Z \/server port=80 INFO Listening for new clients
+-- 2019-11-15T18:05:54.949652133Z \/server port=80 \/handler client-address=10.0.0.8 INFO Connection established
+-- 2019-11-15T18:05:54.949664482Z \/server port=80 \/handler client-address=10.0.0.8 WARNING user error (Oops!)
+-- @ 
 log :: Log -> BB.Builder
 {-# INLINABLE log #-}
 log = \x ->
