@@ -1,7 +1,10 @@
 {-# LANGUAGE OverloadedLists #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module Df1.Html where
+module Df1.Html
+  ( log,
+  )
+where
 
 import qualified Data.ByteString.Builder as BB
 import qualified Data.ByteString.Lazy as BL
@@ -15,6 +18,7 @@ import qualified Data.Time.Clock.System as Time
 import qualified Df1 as D
 import qualified Df1.Render as DR
 import qualified Xmlbf as X
+import Prelude hiding (log)
 
 log1 :: D.Log
 log1 =
@@ -39,24 +43,25 @@ examplePath =
 test :: IO ()
 test =
   let logs = map (\l -> log1 {D.log_level = l}) [minBound .. maxBound]
-   in mapM_ (BL.putStrLn . BB.toLazyByteString . X.encode . toHtml) logs
+   in mapM_ (BL.putStrLn . BB.toLazyByteString . X.encode . log) logs
 
 xxx :: IO ()
 xxx = do
   let logs = map (\l -> log1 {D.log_level = l}) [minBound .. maxBound]
   mapM_ (BL.putStrLn . BB.toLazyByteString . DR.logColor) logs
 
-toHtml :: D.Log -> [X.Node]
-toHtml log =
-  X.element "div" [("class", "df1-log " <> levelClass (D.log_level log))] $
+-- | Converts 'D.Log' into a list of 'X.Node's from "Xmlbf" to render it as HTML.  
+log :: D.Log -> [X.Node]
+log x =
+  X.element "div" [("class", "df1-x " <> levelClass (D.log_level x))] $
     mconcat
-      [ timeHtml (D.log_time log),
+      [ timeHtml (D.log_time x),
         X.text " ",
-        pathsHtml (D.log_path log),
+        pathsHtml (D.log_path x),
         X.text " ",
-        levelHtml (D.log_level log),
+        levelHtml (D.log_level x),
         X.text " ",
-        messageHtml (D.log_message log)
+        messageHtml (D.log_message x)
       ]
 
 levelClass :: D.Level -> T.Text
