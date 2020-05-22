@@ -21,9 +21,51 @@ import qualified Xmlbf as X
 import Prelude hiding (log)
 
 -- | Converts 'D.Log' into a list of 'X.Node's from "Xmlbf" to render it as HTML.
+--
+-- Example log: 
+-- @1999-12-20T07:11:39.230553031Z \/foo x=a y=b \/bar \/qux z=c z=d WARNING Something@
+--
+-- The generated HTML matches the following CSS selectors: 
+--
+-- [@.df1-log.debug@]: 
+--
+-- [@.df1-log.info@]: 
+--
+-- [@.df1-log.notice@]: 
+--
+-- [@.df1-log.warning@]: 
+--
+-- [@.df1-log.error@]: 
+--
+-- [@.df1-log.critical@]:
+--
+-- [@.df1-log.alert@]:
+--
+-- [@.df1-log.emergency@]: Top level container for a 'D.Log' entry of a particular 'D.Level'.
+--
+-- [@.df1-log .time@]: Timestamp - Example: @1999-12-20T07:11:39.230553031Z@
+--
+-- [@.df1-log .path@]: Full list of 'D.Path's - Example: @\/foo x=a y=b \/bar \/qux z=c z=d@
+-- 
+-- [@.df1-log .path .push@]: Single 'D.Push' - Examples: @\/foo@, @\/bar@, @\/qux@
+--
+-- [@.df1-log .path .push .seg@]: Single 'D.Segment' - Example: @foo@
+-- 
+-- [@.df1-log .path .attr@]: Single 'D.Attr' - Example: @x=a@, @y=b@, @z=c@, @z=d@
+--
+-- [@.df1-log .path .attr .key@]: Single 'D.Key' - Example: @x@, @y@, @z@, @z@
+--
+-- [@.df1-log .path .attr .value@]: Single 'D.Value' - Example: @a@, @b@, @c@, @d@
+-- 
+-- [@.df1-log .level@]: 'D.Level' - Example: @WARNING@
+--
+-- [@.df1-log .msg@]: 'D.Message' - Example: @example@
+--
+
+  
 log :: D.Log -> [X.Node]
 log x =
-  X.element "div" [("class", "df1-x " <> levelClass (D.log_level x))] $
+  X.element "div" [("class", "df1-log " <> levelClass (D.log_level x))] $
     mconcat
       [ timeHtml (D.log_time x),
         X.text " ",
@@ -35,7 +77,7 @@ log x =
       ]
 
 levelClass :: D.Level -> T.Text
-levelClass l = "df1-" <> TL.toStrict (TL.toLower (levelToText l))
+levelClass l = TL.toStrict (TL.toLower (levelToText l))
 
 timeHtml :: Time.SystemTime -> [X.Node]
 timeHtml t = spanClass "time" (X.text (textLazyFromBuilder (DR.iso8601 t)))
