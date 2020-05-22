@@ -1,0 +1,82 @@
+{-# LANGUAGE OverloadedLists #-}
+{-# LANGUAGE OverloadedStrings #-}
+
+module Df1.Html.Render
+  ( log,
+  )
+where
+
+import qualified Data.ByteString.Builder as BB
+import qualified Data.ByteString.Lazy as BL
+import Data.Foldable (toList)
+import Data.List (intercalate)
+import qualified Data.Sequence as Seq
+import qualified Data.Text as T
+import qualified Data.Text.Encoding as TE
+import qualified Data.Text.Lazy as TL
+import qualified Data.Time.Clock.System as Time
+import qualified Df1 as D
+import qualified Df1.Render as DR
+import qualified Xmlbf as X
+import Prelude hiding (log)
+
+-- | Converts 'D.Log' into a list of 'X.Node's from "Xmlbf" to render it as HTML.
+log :: D.Log -> [X.Node]
+log x =
+  X.element "div" [("class", "df1-x " <> levelClass (D.log_level x))] $
+    mconcat
+      [ timeHtml (D.log_time x),
+        X.text " ",
+        pathsHtml (D.log_path x),
+        X.text " ",
+        levelHtml (D.log_level x),
+        X.text " ",
+        messageHtml (D.log_message x)
+      ]
+
+levelClass :: D.Level -> T.Text
+levelClass l = "df1-" <> TL.toStrict (TL.toLower (levelToText l))
+
+timeHtml :: Time.SystemTime -> [X.Node]
+timeHtml t = spanClass "time" (X.text (textLazyFromBuilder (DR.iso8601 t)))
+
+textLazyFromBuilder :: BB.Builder -> TL.Text
+textLazyFromBuilder b = TL.fromStrict (TE.decodeUtf8 (BL.toStrict (BB.toLazyByteString b)))
+
+levelHtml :: D.Level -> [X.Node]
+levelHtml l = spanClass "level" (X.text (levelToText l))
+
+levelToText :: D.Level -> TL.Text
+levelToText l =
+  case l of
+    D.Debug -> "DEBUG"
+    D.Info -> "INFO"
+    D.Notice -> "NOTICE"
+    D.Warning -> "WARNING"
+    D.Error -> "ERROR"
+    D.Critical -> "CRITICAL"
+    D.Alert -> "ALERT"
+    D.Emergency -> "EMERGENCY"
+
+messageHtml :: D.Message -> [X.Node]
+messageHtml m = spanClass "msg" (X.text (textLazyFromBuilder (DR.message m)))
+
+pathsHtml :: Seq.Seq D.Path -> [X.Node]
+pathsHtml ps = spanClass "path" (intercalate (X.text " ") (fmap pathHtml (toList ps)))
+
+pathHtml :: D.Path -> [X.Node]
+pathHtml p = case p of
+  D.Push seg -> spanClass "push" (X.text "/" <> segmentHtml seg)
+  D.Attr key val -> spanClass "attr" (keyHtml key <> X.text "=" <> valueHtml val)
+
+segmentHtml :: D.Segment -> [X.Node]
+segmentHtml s = spanClass "seg" (X.text (textLazyFromBuilder (DR.segment s)))
+
+keyHtml :: D.Key -> [X.Node]
+keyHtml k = spanClass "key" (X.text (textLazyFromBuilder (DR.key k)))
+
+valueHtml :: D.Value -> [X.Node]
+valueHtml v = spanClass "value" (X.text (textLazyFromBuilder (DR.value v)))
+
+spanClass :: T.Text -> [X.Node] -> [X.Node]
+spanClass t = X.element "span" [("class", t)]
