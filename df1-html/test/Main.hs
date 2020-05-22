@@ -35,7 +35,7 @@ expected1 :: [X.Node]
 expected1 =
   X.element
     "div"
-    [("class", "df1-x df1-warning")]
+    [("class", "df1-log warning")]
     $ mconcat
       [ X.element "span" [("class", "time")] (X.text "1970-01-01T00:05:55.000000043Z"),
         X.text " ",
