@@ -35,50 +35,50 @@ expected1 :: [X.Node]
 expected1 =
   X.element
     "div"
-    [("class", "df1-log warning")]
+    [("class", "df1-log df1-warning")]
     $ mconcat
-      [ X.element "span" [("class", "time")] (X.text "1970-01-01T00:05:55.000000043Z"),
+      [ X.element "span" [("class", "df1-time")] (X.text "1970-01-01T00:05:55.000000043Z"),
         X.text " ",
-        X.element "span" [("class", "path")] $
+        X.element "span" [("class", "df1-path")] $
           mconcat
-            [ X.element "span" [("class", "push")] $ mconcat [X.text "/", X.element "span" [("class", "seg")] (X.text "foo")],
+            [ X.element "span" [("class", "df1-push")] $ mconcat [X.text "/", X.element "span" [("class", "df1-seg")] (X.text "foo")],
               X.text " ",
-              X.element "span" [("class", "attr")] $
+              X.element "span" [("class", "df1-attr")] $
                 mconcat
-                  [ X.element "span" [("class", "key")] (X.text "%3d"),
+                  [ X.element "span" [("class", "df1-key")] (X.text "%3d"),
                     X.text "=",
-                    X.element "span" [("class", "value")] (X.text "a")
+                    X.element "span" [("class", "df1-value")] (X.text "a")
                   ],
               X.text " ",
-              X.element "span" [("class", "attr")] $
+              X.element "span" [("class", "df1-attr")] $
                 mconcat
-                  [ X.element "span" [("class", "key")] (X.text "y"),
+                  [ X.element "span" [("class", "df1-key")] (X.text "y"),
                     X.text "=",
-                    X.element "span" [("class", "value")] (X.text "b")
+                    X.element "span" [("class", "df1-value")] (X.text "b")
                   ],
               X.text " ",
-              X.element "span" [("class", "push")] $ mconcat [X.text "/", X.element "span" [("class", "seg")] (X.text "bar")],
+              X.element "span" [("class", "df1-push")] $ mconcat [X.text "/", X.element "span" [("class", "df1-seg")] (X.text "bar")],
               X.text " ",
-              X.element "span" [("class", "push")] $ mconcat [X.text "/", X.element "span" [("class", "seg")] (X.text "qux")],
+              X.element "span" [("class", "df1-push")] $ mconcat [X.text "/", X.element "span" [("class", "df1-seg")] (X.text "qux")],
               X.text " ",
-              X.element "span" [("class", "attr")] $
+              X.element "span" [("class", "df1-attr")] $
                 mconcat
-                  [ X.element "span" [("class", "key")] (X.text "z"),
+                  [ X.element "span" [("class", "df1-key")] (X.text "z"),
                     X.text "=",
-                    X.element "span" [("class", "value")] (X.text "c")
+                    X.element "span" [("class", "df1-value")] (X.text "c")
                   ],
               X.text " ",
-              X.element "span" [("class", "attr")] $
+              X.element "span" [("class", "df1-attr")] $
                 mconcat
-                  [ X.element "span" [("class", "key")] (X.text "z"),
+                  [ X.element "span" [("class", "df1-key")] (X.text "z"),
                     X.text "=",
-                    X.element "span" [("class", "value")] (X.text "d")
+                    X.element "span" [("class", "df1-value")] (X.text "d")
                   ]
             ],
         X.text " ",
-        X.element "span" [("class", "level")] (X.text "WARNING"),
+        X.element "span" [("class", "df1-level")] (X.text "WARNING"),
         X.text " ",
-        X.element "span" [("class", "msg")] (X.text "example")
+        X.element "span" [("class", "df1-msg")] (X.text "example")
       ]
 
 log1 :: D.Log

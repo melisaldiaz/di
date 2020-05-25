@@ -27,39 +27,39 @@ import Prelude hiding (log)
 --
 -- The generated HTML matches the following CSS selectors: 
 --
--- [@.df1-log.debug@]: 
+-- [@.df1-log.df1-debug@]: 
 --
--- [@.df1-log.info@]: 
+-- [@.df1-log.df1-info@]: 
 --
--- [@.df1-log.notice@]: 
+-- [@.df1-log.df1-notice@]: 
 --
--- [@.df1-log.warning@]: 
+-- [@.df1-log.df1-warning@]: 
 --
--- [@.df1-log.error@]: 
+-- [@.df1-log.df1-error@]: 
 --
--- [@.df1-log.critical@]:
+-- [@.df1-log.df1-critical@]:
 --
--- [@.df1-log.alert@]:
+-- [@.df1-log.df1-alert@]:
 --
--- [@.df1-log.emergency@]: Top level container for a 'D.Log' entry of a particular 'D.Level'.
+-- [@.df1-log.df1-emergency@]: Top level container for a 'D.Log' entry of a particular 'D.Level'.
 --
--- [@.df1-log .time@]: Timestamp - Example: @1999-12-20T07:11:39.230553031Z@
+-- [@.df1-log .df1-time@]: Timestamp - Example: @1999-12-20T07:11:39.230553031Z@
 --
--- [@.df1-log .path@]: Full list of 'D.Path's - Example: @\/foo x=a y=b \/bar \/qux z=c z=d@
+-- [@.df1-log .df1-path@]: Full list of 'D.Path's - Example: @\/foo x=a y=b \/bar \/qux z=c z=d@
 -- 
--- [@.df1-log .path .push@]: Single 'D.Push' - Examples: @\/foo@, @\/bar@, @\/qux@
+-- [@.df1-log .df1-path .df1-push@]: Single 'D.Push' - Examples: @\/foo@, @\/bar@, @\/qux@
 --
--- [@.df1-log .path .push .seg@]: Single 'D.Segment' - Example: @foo@
+-- [@.df1-log .df1-path .df1-push .df1-seg@]: Single 'D.Segment' - Example: @foo@
 -- 
--- [@.df1-log .path .attr@]: Single 'D.Attr' - Example: @x=a@, @y=b@, @z=c@, @z=d@
+-- [@.df1-log .df1-path .df1-attr@]: Single 'D.Attr' - Example: @x=a@, @y=b@, @z=c@, @z=d@
 --
--- [@.df1-log .path .attr .key@]: Single 'D.Key' - Example: @x@, @y@, @z@, @z@
+-- [@.df1-log .df1-path .df1-attr .df1-key@]: Single 'D.Key' - Example: @x@, @y@, @z@, @z@
 --
--- [@.df1-log .path .attr .value@]: Single 'D.Value' - Example: @a@, @b@, @c@, @d@
+-- [@.df1-log .df1-path .df1-attr .df1-value@]: Single 'D.Value' - Example: @a@, @b@, @c@, @d@
 -- 
--- [@.df1-log .level@]: 'D.Level' - Example: @WARNING@
+-- [@.df1-log .df1-level@]: 'D.Level' - Example: @WARNING@
 --
--- [@.df1-log .msg@]: 'D.Message' - Example: @example@
+-- [@.df1-log .df1-msg@]: 'D.Message' - Example: @example@
 --
 
   
@@ -77,16 +77,16 @@ log x =
       ]
 
 levelClass :: D.Level -> T.Text
-levelClass l = TL.toStrict (TL.toLower (levelToText l))
+levelClass l = "df1-" <> TL.toStrict (TL.toLower (levelToText l))
 
 timeHtml :: Time.SystemTime -> [X.Node]
-timeHtml t = spanClass "time" (X.text (textLazyFromBuilder (DR.iso8601 t)))
+timeHtml t = spanClass "df1-time" (X.text (textLazyFromBuilder (DR.iso8601 t)))
 
 textLazyFromBuilder :: BB.Builder -> TL.Text
 textLazyFromBuilder b = TL.fromStrict (TE.decodeUtf8 (BL.toStrict (BB.toLazyByteString b)))
 
 levelHtml :: D.Level -> [X.Node]
-levelHtml l = spanClass "level" (X.text (levelToText l))
+levelHtml l = spanClass "df1-level" (X.text (levelToText l))
 
 levelToText :: D.Level -> TL.Text
 levelToText l =
@@ -101,24 +101,24 @@ levelToText l =
     D.Emergency -> "EMERGENCY"
 
 messageHtml :: D.Message -> [X.Node]
-messageHtml m = spanClass "msg" (X.text (textLazyFromBuilder (DR.message m)))
+messageHtml m = spanClass "df1-msg" (X.text (textLazyFromBuilder (DR.message m)))
 
 pathsHtml :: Seq.Seq D.Path -> [X.Node]
-pathsHtml ps = spanClass "path" (intercalate (X.text " ") (fmap pathHtml (toList ps)))
+pathsHtml ps = spanClass "df1-path" (intercalate (X.text " ") (fmap pathHtml (toList ps)))
 
 pathHtml :: D.Path -> [X.Node]
 pathHtml p = case p of
-  D.Push seg -> spanClass "push" (X.text "/" <> segmentHtml seg)
-  D.Attr key val -> spanClass "attr" (keyHtml key <> X.text "=" <> valueHtml val)
+  D.Push seg -> spanClass "df1-push" (X.text "/" <> segmentHtml seg)
+  D.Attr key val -> spanClass "df1-attr" (keyHtml key <> X.text "=" <> valueHtml val)
 
 segmentHtml :: D.Segment -> [X.Node]
-segmentHtml s = spanClass "seg" (X.text (textLazyFromBuilder (DR.segment s)))
+segmentHtml s = spanClass "df1-seg" (X.text (textLazyFromBuilder (DR.segment s)))
 
 keyHtml :: D.Key -> [X.Node]
-keyHtml k = spanClass "key" (X.text (textLazyFromBuilder (DR.key k)))
+keyHtml k = spanClass "df1-key" (X.text (textLazyFromBuilder (DR.key k)))
 
 valueHtml :: D.Value -> [X.Node]
-valueHtml v = spanClass "value" (X.text (textLazyFromBuilder (DR.value v)))
+valueHtml v = spanClass "df1-value" (X.text (textLazyFromBuilder (DR.value v)))
 
 spanClass :: T.Text -> [X.Node] -> [X.Node]
 spanClass t = X.element "span" [("class", t)]

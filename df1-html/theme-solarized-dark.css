@@ -10,30 +10,30 @@
    color: #93a1a1;
 }
 
-.df1-theme-solarized-dark div.df1-log.df1-debug span.push,
-.df1-theme-solarized-dark div.df1-log.df1-info span.push,
-.df1-theme-solarized-dark div.df1-log.df1-notice span.push,
-.df1-theme-solarized-dark div.df1-log.df1-warning span.push,
-.df1-theme-solarized-dark div.df1-log.df1-error span.push {
+.df1-theme-solarized-dark div.df1-log.df1-debug span.df1-push,
+.df1-theme-solarized-dark div.df1-log.df1-info span.df1-push,
+.df1-theme-solarized-dark div.df1-log.df1-notice span.df1-push,
+.df1-theme-solarized-dark div.df1-log.df1-warning span.df1-push,
+.df1-theme-solarized-dark div.df1-log.df1-error span.df1-push {
     color: #268bd2;
 }
 
-.df1-theme-solarized-dark div.df1-log.df1-debug span.key,
-.df1-theme-solarized-dark div.df1-log.df1-info span.key,
-.df1-theme-solarized-dark div.df1-log.df1-notice span.key,
-.df1-theme-solarized-dark div.df1-log.df1-warning span.key,
-.df1-theme-solarized-dark div.df1-log.df1-error span.key,
-.df1-theme-solarized-dark div.df1-log.df1-critical span.key,
-.df1-theme-solarized-dark div.df1-log.df1-alert span.key,
-.df1-theme-solarized-dark div.df1-log.df1-emergency span.key  {
+.df1-theme-solarized-dark div.df1-log.df1-debug span.df1-key,
+.df1-theme-solarized-dark div.df1-log.df1-info span.df1-key,
+.df1-theme-solarized-dark div.df1-log.df1-notice span.df1-key,
+.df1-theme-solarized-dark div.df1-log.df1-warning span.df1-key,
+.df1-theme-solarized-dark div.df1-log.df1-error span.df1-key,
+.df1-theme-solarized-dark div.df1-log.df1-critical span.df1-key,
+.df1-theme-solarized-dark div.df1-log.df1-alert span.df1-key,
+.df1-theme-solarized-dark div.df1-log.df1-emergency span.df1-key  {
     color: #2aa198;
 }
 
-.df1-theme-solarized-dark div.df1-log.df1-notice span.level {
+.df1-theme-solarized-dark div.df1-log.df1-notice span.df1-level {
     color: #859900;
 }
 
-.df1-theme-solarized-dark div.df1-log.df1-warning span.level {
+.df1-theme-solarized-dark div.df1-log.df1-warning span.df1-level {
     color: #b58900;
 }
 
@@ -42,7 +42,7 @@
     color: #002b36;
 }
 
-.df1-theme-solarized-dark div.df1-log.df1-error span.level {
+.df1-theme-solarized-dark div.df1-log.df1-error span.df1-level {
     color: #dc322f;
 }
 
@@ -53,11 +53,11 @@
     color: #002b36;
 }
 
-.df1-theme-solarized-dark div.df1-log.df1-critical span.push,
-.df1-theme-solarized-dark div.df1-log.df1-alert span.push,
-.df1-theme-solarized-dark div.df1-log.df1-emergency span.push,
-.df1-theme-solarized-dark div.df1-log.df1-critical span.level, 
-.df1-theme-solarized-dark div.df1-log.df1-alert span.level, 
-.df1-theme-solarized-dark div.df1-log.df1-emergency span.level {
+.df1-theme-solarized-dark div.df1-log.df1-critical span.df1-push,
+.df1-theme-solarized-dark div.df1-log.df1-alert span.df1-push,
+.df1-theme-solarized-dark div.df1-log.df1-emergency span.df1-push,
+.df1-theme-solarized-dark div.df1-log.df1-critical span.df1-level, 
+.df1-theme-solarized-dark div.df1-log.df1-alert span.df1-level, 
+.df1-theme-solarized-dark div.df1-log.df1-emergency span.df1-level {
     color: #fdf6e3;
 }
