@@ -1,6 +1,6 @@
 name: df1-html
-version: 1.0
-author: Renzo Carbonara
+version: 0.1
+author: Melisa Laura Diaz
 maintainer: renλren.zone
 copyright: Renzo Carbonara 2020
 license: BSD3
@@ -9,8 +9,8 @@ extra-source-files: README.md CHANGELOG.md
 category: Logging
 build-type: Simple
 cabal-version: >=1.18
-synopsis: Renders df1 logs as HTML
-description: Renders df1 logs as HTML
+synopsis: Render and parse df1 logs as HTML
+description: Render and parse df1 logs as HTML
 homepage: https://github.com/k0001/di
 bug-reports: https://github.com/k0001/di/issues
 
@@ -41,7 +41,10 @@ test-suite test
     containers,
     df1,
     df1-html,
+    QuickCheck,
     tasty,
     tasty-hunit,
+    tasty-quickcheck,
+    text,
     time,    
     xmlbf

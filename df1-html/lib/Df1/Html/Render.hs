@@ -59,10 +59,8 @@ import Prelude hiding (log)
 -- 
 -- [@.df1-log .df1-level@]: 'D.Level' - Example: @WARNING@
 --
--- [@.df1-log .df1-msg@]: 'D.Message' - Example: @example@
+-- [@.df1-log .df1-msg@]: 'D.Message' - Example: @Something@
 --
-
-  
 log :: D.Log -> [X.Node]
 log x =
   X.element "div" [("class", "df1-log " <> levelClass (D.log_level x))] $
