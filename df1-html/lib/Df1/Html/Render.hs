@@ -128,10 +128,10 @@ spanClass t = X.element "span" [("class", t)]
 -- 
 -- If you need to style the rendered HTML, you can use some of the themes shipped with this library.
 -- 
--- == theme-solarized-dark.css
+-- == [theme-solarized-dark.css](https://github.com/k0001/di/blob/html/df1-html/theme-solarized-dark.css?raw=true)
 --
--- ![df1 example](https://raw.githubusercontent.com/k0001/di/df1-0.3.2/df1/df1.png)
+-- ![theme-solarized-dark](https://github.com/k0001/di/blob/html/df1-html/theme-solarized-dark.png?raw=true)
 --
--- == theme-solarized-light.css
+-- == [theme-solarized-light.css](https://github.com/k0001/di/blob/html/df1-html/theme-solarized-light.css?raw=true)
 --
--- ![df1 example](https://raw.githubusercontent.com/k0001/di/df1-0.3.2/df1/df1.png)
+-- ![theme-solarized-light](https://github.com/k0001/di/blob/html/df1-html/theme-solarized-light.png?raw=true)
