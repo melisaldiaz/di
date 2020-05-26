@@ -3,6 +3,9 @@
 
 module Df1.Html.Render
   ( log,
+   -- * Themes
+   --
+   -- $themes
   )
 where
 
@@ -120,3 +123,15 @@ valueHtml v = spanClass "df1-value" (X.text (textLazyFromBuilder (DR.value v)))
 
 spanClass :: T.Text -> [X.Node] -> [X.Node]
 spanClass t = X.element "span" [("class", t)]
+
+-- $themes
+-- 
+-- If you need to style the rendered HTML, you can use some of the themes shipped with this library.
+-- 
+-- == theme-solarized-dark.css
+--
+-- ![df1 example](https://raw.githubusercontent.com/k0001/di/df1-0.3.2/df1/df1.png)
+--
+-- == theme-solarized-light.css
+--
+-- ![df1 example](https://raw.githubusercontent.com/k0001/di/df1-0.3.2/df1/df1.png)
